@@ -20,13 +20,13 @@ def test_input():
     return [x for x in raw.split("\n")]
 
 
-def real_input() -> List[int]:
+def real_input() -> List[str]:
     with open("data/3.txt") as f:
         return [x for x in f.readlines()]
 
 
 def get_gamma_epsilon(input: List[str]) -> Tuple[int, int]:
-    c = [Counter() for _ in range(len(input[0]))]
+    c: List[Counter] = [Counter() for _ in range(len(input[0]))]
 
     for row in input:
         for i, x in enumerate(row):
@@ -62,6 +62,7 @@ def get_rating(input: List[str], oxygen: bool) -> int:
 
         if len(input) == 1:
             return int(input[0], 2)
+    raise ValueError
 
 
 if __name__ == "__main__":

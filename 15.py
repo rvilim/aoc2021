@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Generator, Tuple
 
 
 def test_input():
@@ -20,7 +21,7 @@ def real_input():
         return f.read()
 
 
-def get_neighbours(row: int, col: int, n_rows: int, n_cols: int) -> list:
+def get_neighbours(row: int, col: int, n_rows: int, n_cols: int) -> Generator[Tuple[int, int], None, None]:
     for i, j in ((-1, 0), (1, 0), (0, -1), (0, 1)):
         if 0 <= row + i < n_rows and 0 <= col + j < n_cols:
             yield (row + i, col + j)
@@ -38,7 +39,7 @@ def path(grid: np.ndarray):
     distance[0, 0] = 0
 
     current_node = (0, 0)
-    i = 0
+
     while True:
         for neighbour in get_neighbours(*current_node, *grid.shape):
             if not visited[neighbour]:
@@ -56,9 +57,6 @@ def path(grid: np.ndarray):
         distance[current_node[0], current_node[1]] = max_distance
         current_node = np.unravel_index(np.argmin(distance), distance.shape)
 
-        i += 1
-        if i % 1000 == 0:
-            print(np.sum(visited) / visited.size)
     return distance[-1, -1]
 
 
@@ -90,7 +88,3 @@ if __name__ == "__main__":
     assert path(new_grid) == 315
 
     print(path(tile_map(parse(real_input()))))
-
-    # print(np.array2string(new_grid, separator="", max_line_width=np.inf, threshold=np.prod(new_grid.shape)))
-
-    # np.array2string(new_grid, max_line_width=np.inf)

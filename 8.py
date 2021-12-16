@@ -2,7 +2,7 @@ from typing import Tuple, List
 from collections import defaultdict
 
 
-def test_input() -> Tuple[List[str], List[str]]:
+def test_input() -> List[Tuple[List[str], List[str]]]:
     raw = """be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
 fgaebd cg bdaec gdafb agbcfd gdcbef bgcad gfac gcb cdgabef | cg cg fdcagb cbg
@@ -19,7 +19,7 @@ gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
     return [(s.split(" ")[:10], s.split(" ")[11:]) for s in split]
 
 
-def real_input() -> Tuple[List[str], List[str]]:
+def real_input() -> List[Tuple[List[str], List[str]]]:
     with open("data/8.txt") as f:
         return [(s.rstrip().split(" ")[:10], s.rstrip().split(" ")[11:]) for s in f]
 

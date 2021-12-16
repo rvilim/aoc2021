@@ -6,12 +6,12 @@ def test_input():
     return tuple((int(i) for i in "3,4,3,1,2".split(",")))
 
 
-def real_input() -> Tuple[int]:
+def real_input() -> Tuple[int, ...]:
     with open("data/6.txt") as f:
         return tuple((int(i) for i in f.readline().split(",")))
 
 
-def refactor_state(state: Tuple[int]) -> Dict[int, int]:
+def refactor_state(state: Tuple[int, ...]) -> Dict[int, int]:
     return defaultdict(int, dict(Counter(state)))
 
 

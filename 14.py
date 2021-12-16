@@ -64,7 +64,7 @@ def score(pattern: str) -> int:
     return c.most_common()[0][1] - c.most_common()[-1][1]
 
 
-def apply_count_40(pattern: str, rules: Dict[str, str]) -> str:
+def apply_count_40(pattern: str, rules: Dict[str, str]) -> int:
 
     counts = {k: Counter(iter(apply_steps(k, rules, 20))) for k, v in rules.items()}
 

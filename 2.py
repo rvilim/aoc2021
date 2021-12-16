@@ -47,7 +47,7 @@ def parse_2(input: List[str]) -> List[Tuple[int, int]]:
     return res
 
 
-def real_input() -> List[int]:
+def real_input() -> List[str]:
     with open("data/2.txt") as f:
         return [x for x in f.readlines()]
 
