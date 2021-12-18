@@ -189,14 +189,6 @@ def largest_sum(input: List[Node]) -> int:
             if magnitude(res) > largest:
                 largest = magnitude(res)
 
-            i_copy = deepcopy(i)
-            j_copy = deepcopy(j)
-
-            res = add(j_copy, i_copy)
-            reduce(res)
-            if magnitude(res) > largest:
-                largest = magnitude(res)
-
     return largest
 
 
