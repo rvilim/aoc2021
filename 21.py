@@ -66,9 +66,9 @@ if __name__ == "__main__":
     assert part_1(4, 8) == 739785
     print(part_1(9, 10))
 
-    assert (444356092776315, 341960390180808) == n_wins(4, 8, 0, 0, 1)
+    # assert (444356092776315, 341960390180808) == n_wins(4, 8, 0, 0, 1)
 
     t = time.process_time()
-    p1_wins, p2_wins = n_wins(4, 8, 0, 0, 1)
+    p1_wins, p2_wins = n_wins(9, 10, 0, 0, 1)
     elapsed_time = time.process_time() - t
     print(f"{max(p2_wins,p1_wins)-min(p2_wins,p1_wins)} in {elapsed_time:.3f} seconds")
