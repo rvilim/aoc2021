@@ -1,5 +1,8 @@
 from functools import cache
 
+import time
+
+
 def part_1(start_1: int, start_2: int):
     positions = [start_1, start_2]
     scores = [0, 0]
@@ -27,36 +30,34 @@ def part_1(start_1: int, start_2: int):
 
 
 @cache
-def n_wins(start_1: int, start_2: int, score_1: int, score_2: int, one_to_move: bool, winning_score:int):
+def update_score_position(start, score, roll):
+    new_position = start + roll
+    new_position = 1 + ((new_position - 1) % 10)
+    new_score = score + new_position
+
+    return new_position, new_score
+
+
+rolls = {3: 1, 4: 3, 5: 6, 6: 7, 7: 6, 8: 3, 9: 1}
+
+
+@cache
+def n_wins(moving_start: int, other_start: int, moving_score: int, other_score: int, one_moving: bool):
+
     total_one_wins = 0
     total_two_wins = 0
 
-    if one_to_move:
-        for roll in (3, 4, 5, 4, 5, 6, 5, 6, 7, 4, 5, 6, 5, 6, 7, 6, 7, 8, 5, 6, 7, 6, 7, 8, 7, 8, 9):
-            new_position = start_1 + roll
-            new_position = 1 + ((new_position - 1) % 10)
-            new_score_1 = score_1 + new_position
+    for roll, n in rolls.items():
+        new_position, new_score = update_score_position(moving_start, moving_score, roll)
 
-            if new_score_1 >= winning_score:
-                total_one_wins += 1
-            else:
-                one_wins, two_wins = n_wins(new_position, start_2, new_score_1, score_2, False, winning_score)
-                total_one_wins += one_wins
-                total_two_wins += two_wins
-
-    if not one_to_move:
-        for roll in (i+j+k for i in range(1,3) for j in range(1,3) for k in range(1,3)):
-            new_position = start_2 + roll
-            new_position = 1 + ((new_position - 1) % 10)
-
-            new_score_2 = score_2 + new_position
-
-            if new_score_2 >= winning_score:
-                total_two_wins += 1
-            else:
-                one_wins, two_wins = n_wins(start_1, new_position, score_1, new_score_2, True, winning_score)
-                total_one_wins += one_wins
-                total_two_wins += two_wins
+        if new_score < 21:
+            one_wins, two_wins = n_wins(other_start, new_position, other_score, new_score, not one_moving)
+            total_one_wins += n * one_wins
+            total_two_wins += n * two_wins
+        elif one_moving:
+            total_one_wins += n
+        else:
+            total_two_wins += n
 
     return total_one_wins, total_two_wins
 
@@ -65,5 +66,9 @@ if __name__ == "__main__":
     assert part_1(4, 8) == 739785
     print(part_1(9, 10))
 
-    assert (444356092776315, 341960390180808) == n_wins(4, 8, 0, 0, True, 21)
-    print(max(n_wins(9, 10, 0, 0, True, 21)))
+    assert (444356092776315, 341960390180808) == n_wins(4, 8, 0, 0, 1)
+
+    t = time.process_time()
+    p1_wins, p2_wins = n_wins(4, 8, 0, 0, 1)
+    elapsed_time = time.process_time() - t
+    print(f"{max(p2_wins,p1_wins)-min(p2_wins,p1_wins)} in {elapsed_time:.3f} seconds")
