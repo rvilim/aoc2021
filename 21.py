@@ -45,7 +45,7 @@ def n_wins(start_1: int, start_2: int, score_1: int, score_2: int, one_to_move: 
                 total_two_wins += two_wins
 
     if not one_to_move:
-        for roll in (3, 4, 5, 4, 5, 6, 5, 6, 7, 4, 5, 6, 5, 6, 7, 6, 7, 8, 5, 6, 7, 6, 7, 8, 7, 8, 9):
+        for roll in (i+j+k for i in range(1,3) for j in range(1,3) for k in range(1,3)):
             new_position = start_2 + roll
             new_position = 1 + ((new_position - 1) % 10)
 
